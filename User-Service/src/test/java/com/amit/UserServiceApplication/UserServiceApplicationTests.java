@@ -1,10 +1,10 @@
-package com.amit.E_wallet;
+package com.amit.UserServiceApplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EWalletApplicationTests {
+class UserServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

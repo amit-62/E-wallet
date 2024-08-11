@@ -1,13 +1,13 @@
-package com.amit.E_wallet;
+package com.amit.UserServiceApplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EWalletApplication {
+public class UserServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EWalletApplication.class, args);
+		SpringApplication.run(UserServiceApplication.class, args);
 	}
 
 }

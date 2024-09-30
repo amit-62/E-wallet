@@ -1,4 +1,4 @@
-package com.amit.WalletServiceApplication;
+package com.amit.Utilities;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

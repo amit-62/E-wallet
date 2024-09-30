@@ -1,4 +1,4 @@
-package com.amit.UserServiceApplication.models;
+package com.amit.Utilities;
 
 public enum UserIdentifier {
     PAN,

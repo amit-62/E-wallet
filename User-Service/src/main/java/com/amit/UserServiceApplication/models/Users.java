@@ -1,5 +1,6 @@
 package com.amit.UserServiceApplication.models;
 
+import com.amit.Utilities.UserIdentifier;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 //@RequiredArgsConstructor

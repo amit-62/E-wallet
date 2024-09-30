@@ -3,16 +3,26 @@ package com.amit.UserServiceApplication.service;
 import com.amit.UserServiceApplication.dtos.UserRequestDTO;
 import com.amit.UserServiceApplication.models.Users;
 import com.amit.UserServiceApplication.repository.UserRepository;
+import com.amit.Utilities.CommonConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.json.simple.JSONObject;
+
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -20,19 +30,42 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+//    @Autowired
+//    private CommonConstants commonConstants;
+
     @Value("${user.Authority}")
     private String userAuthority;
 
     @Value("${admin.Authority}")
     private String adminAuthority;
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    public Users addUpdate(UserRequestDTO dto) {
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+
+    public Users addUpdate(UserRequestDTO dto) throws JsonProcessingException {
         Users user = dto.toUser();
         user.setAuthorities(userAuthority);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
-        return userRepository.save(user);
+        user = userRepository.save(user);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(CommonConstants.USER_CONTACT, user.getContact());
+        jsonObject.put(CommonConstants.USER_EMAIl, user.getEmail());
+        jsonObject.put(CommonConstants.USER_NAME , user.getName());
+        jsonObject.put(CommonConstants.USER_IDENTIFIER , user.getIdentifier());
+        jsonObject.put(CommonConstants.USER_IDENTIFIER_VALUE , user.getUserIdentifierValue());
+        jsonObject.put(CommonConstants.USER_ID, user.getPk());
+
+        logger.info("json object as a string " + jsonObject);
+        logger.info("json object as a string by objectMapper.writeValueAsString(jsonObject) " + objectMapper.writeValueAsString(jsonObject));
+
+        kafkaTemplate.send(CommonConstants.USER_CREATED_TOPIC, objectMapper.writeValueAsString(jsonObject));
+        return user;
     }
 
     @Override

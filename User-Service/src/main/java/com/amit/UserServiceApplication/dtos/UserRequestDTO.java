@@ -1,6 +1,6 @@
 package com.amit.UserServiceApplication.dtos;
 
-import com.amit.UserServiceApplication.models.UserIdentifier;
+import com.amit.Utilities.UserIdentifier;
 import com.amit.UserServiceApplication.models.UserType;
 import com.amit.UserServiceApplication.models.Users;
 import jakarta.validation.constraints.NotBlank;

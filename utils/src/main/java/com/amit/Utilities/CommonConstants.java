@@ -18,4 +18,5 @@ public class CommonConstants {
     public final static String TXN_INITIATED_TOPIC ="TXN_INITIATED_TOPIC";
     public final static String TXN_UPDATED_TOPIC ="TXN_UPDATED_TOPIC";
     public final static String MESSAGE ="message";
+    public static final String WALLET_CREATED_TOPIC = "WALLET_CREATED_TOPIC";
 }
